@@ -1,43 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clock</title>
+    <title>可爱风格清单和表单</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #282c34;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #61dafb;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            background-color: #FFFAF0;
+            text-align: center;
+            color: #333;
         }
+
+        h1 {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
         .clock {
-            font-size: 5rem;
-            background: #20232a;
+            font-size: 1.5em;
+            margin: 20px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            font-size: 1.2em;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .checklist li input {
+            margin-right: 10px;
+        }
+
+        .checklist li.completed {
+            text-decoration: line-through;
+            color: grey;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .cute-form {
+            margin-top: 20px;
             padding: 20px;
+            background-color: #FFF8DC;
+            border: 2px solid #FFD700;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+        }
+
+        .cute-form input, .cute-form button {
+            font-size: 1em;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #FFD700;
+            border-radius: 5px;
+        }
+
+        .cute-form button {
+            background-color: #FFD700;
+            cursor: pointer;
+        }
+
+        .cute-form button:hover {
+            background-color: #FFA500;
+        }
+
+        .journey-list {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .journey-list th, .journey-list td {
+            border: 1px solid #FFD700;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .journey-list th {
+            background-color: #FFE4B5;
         }
     </style>
 </head>
 <body>
+    <h1>可爱的小动物清单</h1>
     <div class="clock" id="clock"></div>
+    <ul class="checklist" id="checklist">
+        <li><input type="checkbox"> 打包行李</li>
+        <li><input type="checkbox"> 预订酒店</li>
+        <li><input type="checkbox"> 安排交通</li>
+        <li><input type="checkbox"> 准备文件</li>
+    </ul>
+    <div class="cute-form hidden" id="cuteForm">
+        <h2>旅程信息</h2>
+        <input type="text" id="journeyName" placeholder="旅程名称"><br>
+        <input type="text" id="destination" placeholder="出行目的地"><br>
+        <input type="date" id="travelDate"><br>
+        <button onclick="submitForm()">OK?</button>
+    </div>
+    <table class="journey-list" id="journeyList">
+        <thead>
+            <tr>
+                <th>旅程名称</th>
+                <th>出行目的地</th>
+                <th>出行时间</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
     <script>
         function updateClock() {
-            const clock = document.getElementById('clock');
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            clock.textContent = `${hours}:${minutes}:${seconds}`;
+            const clock = document.getElementById('clock');
+            clock.innerText = now.toLocaleTimeString();
         }
+
         setInterval(updateClock, 1000);
-        updateClock();  // Initial call to display the clock immediately
+
+        const checklist = document.getElementById('checklist');
+        checklist.addEventListener('change', function(event) {
+            const li = event.target.parentElement;
+            if (event.target.checked) {
+                li.classList.add('completed');
+            } else {
+                li.classList.remove('completed');
+            }
+
+            const allChecked = Array.from(checklist.querySelectorAll('input')).every(input => input.checked);
+            const cuteForm = document.getElementById('cuteForm');
+            if (allChecked) {
+                cuteForm.classList.remove('hidden');
+            } else {
+                cuteForm.classList.add('hidden');
+            }
+        });
+
+        function submitForm() {
+            const journeyName = document.getElementById('journeyName').value;
+            const destination = document.getElementById('destination').value;
+            const travelDate = document.getElementById('travelDate').value;
+
+            if (journeyName && destination && travelDate) {
+                if (confirm("全都收拾好了嘛？")) {
+                    const journeyList = document.getElementById('journeyList').querySelector('tbody');
+                    const newRow = journeyList.insertRow();
+                    newRow.insertCell(0).innerText = journeyName;
+                    newRow.insertCell(1).innerText = destination;
+                    newRow.insertCell(2).innerText = travelDate;
+                }
+            } else {
+                alert("请填写所有字段！");
+            }
+        }
     </script>
 </body>
 </html>
