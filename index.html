@@ -1,169 +1,165 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>可爱风格清单和表单</title>
+    <title>可爱的旅行计划表</title>
     <style>
         body {
-            font-family: "Comic Sans MS", cursive, sans-serif;
-            background-color: #FFFAF0;
-            text-align: center;
-            color: #333;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+            background-color: #ffe6e6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
-
+        .container {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
         h1 {
-            font-size: 2em;
-            margin-top: 20px;
+            color: #ff6b6b;
+            text-align: center;
         }
-
         .clock {
-            font-size: 1.5em;
-            margin: 20px;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
         }
-
         .checklist {
-            list-style: none;
+            list-style-type: none;
             padding: 0;
         }
-
         .checklist li {
-            font-size: 1.2em;
-            margin: 10px 0;
+            margin-bottom: 10px;
+        }
+        .checklist li label {
             display: flex;
             align-items: center;
-        }
-
-        .checklist li input {
-            margin-right: 10px;
-        }
-
-        .checklist li.completed {
-            text-decoration: line-through;
-            color: grey;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .cute-form {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #FFF8DC;
-            border: 2px solid #FFD700;
-            border-radius: 10px;
-            display: inline-block;
-        }
-
-        .cute-form input, .cute-form button {
-            font-size: 1em;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #FFD700;
-            border-radius: 5px;
-        }
-
-        .cute-form button {
-            background-color: #FFD700;
             cursor: pointer;
         }
-
-        .cute-form button:hover {
-            background-color: #FFA500;
+        .checklist li input[type="checkbox"] {
+            margin-right: 10px;
         }
-
-        .journey-list {
+        .checklist li span {
+            transition: all 0.3s;
+        }
+        .checklist li input[type="checkbox"]:checked + span {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .travel-form {
+            display: none;
             margin-top: 20px;
-            border-collapse: collapse;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
         }
-
-        .journey-list th, .journey-list td {
-            border: 1px solid #FFD700;
+        .travel-form input, .travel-form button {
+            display: block;
+            width: 100%;
             padding: 10px;
-            text-align: center;
+            margin-bottom: 10px;
+            border: 2px solid #ff9999;
+            border-radius: 10px;
+            font-size: 16px;
         }
-
-        .journey-list th {
-            background-color: #FFE4B5;
+        .travel-form button {
+            background-color: #ff9999;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .travel-form button:hover {
+            background-color: #ff6b6b;
+        }
+        .travel-list {
+            margin-top: 20px;
+        }
+        .travel-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .travel-list th, .travel-list td {
+            border: 1px solid #ff9999;
+            padding: 8px;
+            text-align: left;
+        }
+        .travel-list th {
+            background-color: #ffcccc;
         }
     </style>
 </head>
 <body>
-    <h1>可爱的小动物清单</h1>
-    <div class="clock" id="clock"></div>
-    <ul class="checklist" id="checklist">
-        <li><input type="checkbox"> 打包行李</li>
-        <li><input type="checkbox"> 预订酒店</li>
-        <li><input type="checkbox"> 安排交通</li>
-        <li><input type="checkbox"> 准备文件</li>
-    </ul>
-    <div class="cute-form hidden" id="cuteForm">
-        <h2>旅程信息</h2>
-        <input type="text" id="journeyName" placeholder="旅程名称"><br>
-        <input type="text" id="destination" placeholder="出行目的地"><br>
-        <input type="date" id="travelDate"><br>
-        <button onclick="submitForm()">OK?</button>
+    <div class="container">
+        <h1>🐰 可爱的旅行计划表 🐱</h1>
+        <div class="clock" id="clock">🕰️ 00:00:00</div>
+        <ul class="checklist" id="checklist">
+            <li><label><input type="checkbox"><span>🧳 准备行李</span></label></li>
+            <li><label><input type="checkbox"><span>🎫 预订机票/火车票</span></label></li>
+            <li><label><input type="checkbox"><span>🏨 预订住宿</span></label></li>
+            <li><label><input type="checkbox"><span>📷 准备相机</span></label></li>
+            <li><label><input type="checkbox"><span>💊 准备药品</span></label></li>
+        </ul>
+        <div class="travel-form" id="travelForm">
+            <input type="text" id="tripName" placeholder="旅程名称" required>
+            <input type="text" id="destination" placeholder="出行目的地" required>
+            <input type="date" id="travelDate" required>
+            <button id="submitBtn">OK? 🐾</button>
+        </div>
+        <div class="travel-list">
+            <table id="travelTable">
+                <tr>
+                    <th>旅程名称</th>
+                    <th>目的地</th>
+                    <th>出行时间</th>
+                </tr>
+            </table>
+        </div>
     </div>
-    <table class="journey-list" id="journeyList">
-        <thead>
-            <tr>
-                <th>旅程名称</th>
-                <th>出行目的地</th>
-                <th>出行时间</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
     <script>
         function updateClock() {
             const now = new Date();
-            const clock = document.getElementById('clock');
-            clock.innerText = now.toLocaleTimeString();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('clock').textContent = `🕰️ ${timeString}`;
         }
 
         setInterval(updateClock, 1000);
 
         const checklist = document.getElementById('checklist');
-        checklist.addEventListener('change', function(event) {
-            const li = event.target.parentElement;
-            if (event.target.checked) {
-                li.classList.add('completed');
-            } else {
-                li.classList.remove('completed');
-            }
+        const travelForm = document.getElementById('travelForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const travelTable = document.getElementById('travelTable');
 
-            const allChecked = Array.from(checklist.querySelectorAll('input')).every(input => input.checked);
-            const cuteForm = document.getElementById('cuteForm');
+        checklist.addEventListener('change', function() {
+            const allChecked = Array.from(checklist.querySelectorAll('input[type="checkbox"]')).every(checkbox => checkbox.checked);
             if (allChecked) {
-                cuteForm.classList.remove('hidden');
+                travelForm.style.display = 'block';
             } else {
-                cuteForm.classList.add('hidden');
+                travelForm.style.display = 'none';
             }
         });
 
-        function submitForm() {
-            const journeyName = document.getElementById('journeyName').value;
-            const destination = document.getElementById('destination').value;
-            const travelDate = document.getElementById('travelDate').value;
+        submitBtn.addEventListener('click', function() {
+            if (confirm('全都收拾好了嘛？')) {
+                const tripName = document.getElementById('tripName').value;
+                const destination = document.getElementById('destination').value;
+                const travelDate = document.getElementById('travelDate').value;
 
-            if (journeyName && destination && travelDate) {
-                if (confirm("全都收拾好了嘛？")) {
-                    const journeyList = document.getElementById('journeyList').querySelector('tbody');
-                    const newRow = journeyList.insertRow();
-                    newRow.insertCell(0).innerText = journeyName;
-                    newRow.insertCell(1).innerText = destination;
-                    newRow.insertCell(2).innerText = travelDate;
-                }
-            } else {
-                alert("请填写所有字段！");
+                const newRow = travelTable.insertRow(-1);
+                newRow.innerHTML = `
+                    <td>${tripName}</td>
+                    <td>${destination}</td>
+                    <td>${travelDate}</td>
+                `;
+
+                document.getElementById('tripName').value = '';
+                document.getElementById('destination').value = '';
+                document.getElementById('travelDate').value = '';
             }
-        }
+        });
     </script>
 </body>
 </html>
